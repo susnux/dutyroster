@@ -17,12 +17,13 @@ A simple but complete duty roster for your nextcloud instance!]]></description>
     <category>organization</category>
     <bugs>https://github.com/susnux/duty-roster/issues</bugs>
     <dependencies>
-        <nextcloud min-version="25" max-version="25"/>
+        <nextcloud min-version="25" max-version="26"/>
     </dependencies>
     <navigations>
         <navigation>
             <name>Duty Roster</name>
             <route>dutyroster.page.index</route>
+            <icon>roster.svg</icon>
         </navigation>
     </navigations>
 </info>

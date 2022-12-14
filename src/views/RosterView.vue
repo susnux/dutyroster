@@ -16,6 +16,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { getCanonicalLocale, getFirstDay } from '@nextcloud/l10n'
 import { useRouter } from 'vue-router/composables'
+import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 
 export default defineComponent({
 	components: {
@@ -38,6 +39,15 @@ export default defineComponent({
 
 		const calendar = ref<{getApi:()=>Calendar}>()
 		const api = computed(() => calendar.value?.getApi())
+
+		const resizeCalendar = () => { api.value?.updateSize() }
+
+		onMounted(() => {
+			subscribe('navigation-toggled', resizeCalendar)
+		})
+		onUnmounted(() => {
+			unsubscribe('navigation-toggled', resizeCalendar)
+		})
 
 		router.beforeResolve((to, from) => {
 			if (to.name === from.name && to.name === 'roster') {

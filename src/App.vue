@@ -5,12 +5,12 @@
 	-->
 	<NcContent app-name="dutyroster">
 		<NcAppNavigation>
-			<NcAppNavigationNew v-if="$route.name !== 'roster'"
+			<NcAppNavigationNew v-if="routeName !== 'roster'"
 				:text="t('dutyroster', 'View duty roster')"
 				@click="goRoster" />
 			<AppNavigationRosterButton v-else />
 			<NcAppNavigationNew :text="t('dutyroster', 'Your shifts')"
-				:disabled="$route.name === 'shifts'"
+				:disabled="routeName === 'shifts'"
 				@click="goShifts" />
 		</NcAppNavigation>
 		<NcAppContent>
@@ -26,10 +26,11 @@ import {
 	NcAppNavigationNew,
 	NcContent,
 } from '@nextcloud/vue'
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import AppNavigationRosterButton from './components/AppNavigationRosterButton.vue'
 
 import '@nextcloud/dialogs/dist/index.css'
+import { useRoute, useRouter } from 'vue-router/composables'
 
 export default defineComponent({
 	name: 'App',
@@ -42,21 +43,27 @@ export default defineComponent({
 	},
 
 	setup() {
+		const router = useRouter()
+		const route = useRoute()
+
+		const routeName = computed(() => route.name)
+
 		/**
 		 * Navigate to the "my shifts" view
 		 */
 		function goShifts() {
-			this.$router.push({ name: 'shifts' })
+			router.push({ name: 'shifts' })
 		}
 
 		/**
 		 * Navigate to the roster view
 		 */
 		function goRoster() {
-			this.$router.push({ name: 'roster' })
+			router.push({ name: 'roster', params: { view: 'week' } })
 		}
 
 		return {
+			routeName,
 			goRoster,
 			goShifts,
 		}

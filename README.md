@@ -2,6 +2,8 @@
 A simple but complete duty roster for your nextcloud instance!
 Organize your staff just within one application.
 
+UI is (very) inspired by the great nextcloud calendar app
+
 ## Building the app
 
 The app can be built by using the provided Makefile by running:

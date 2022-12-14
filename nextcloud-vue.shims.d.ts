@@ -5,6 +5,7 @@ declare module '*.vue' {
 }
 
 declare module '@nextcloud/vue';
+declare module 'vue-shortkey';
 
 // Declare global variables from webpack define plugin
 declare const appName: string

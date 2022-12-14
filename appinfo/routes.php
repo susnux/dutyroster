@@ -13,7 +13,8 @@ return [
 		[
 			'name' => 'page#views',
 			'url' => '/{view}',
-			'verb' => 'GET'
+			'verb' => 'GET',
+			'requirements' => array('view' => '.+')
 		],
 	],
 ];

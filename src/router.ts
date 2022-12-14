@@ -41,9 +41,7 @@ export default new Router({
 		{
 			path: '/',
 			name: 'root',
-			redirect: {
-				name: 'roster',
-			},
+			redirect: '/roster/week/',
 		},
 		{
 			path: '/shifts',
@@ -52,7 +50,12 @@ export default new Router({
 		},
 		{
 			path: '/roster',
+			redirect: '/roster/week',
+		},
+		{
+			path: '/roster/:view/:initialDate?',
 			name: 'roster',
+			props: true,
 			component: RosterView,
 		},
 	],

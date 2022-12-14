@@ -10,9 +10,12 @@
 <script lang="ts">
 import '@fullcalendar/core/vdom.js'
 import FullCalendar, { Calendar, CalendarOptions } from '@fullcalendar/vue'
+import allLocales from '@fullcalendar/core/locales-all'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { getCanonicalLocale, getFirstDay } from '@nextcloud/l10n'
+import { useRouter } from 'vue-router/composables'
 
 export default defineComponent({
 	components: {
@@ -20,26 +23,57 @@ export default defineComponent({
 	},
 
 	props: {
-		firstDay: {
-			type: Number,
-			default: 0,
-		},
 		initialDate: {
 			type: [Date, String],
-			default: new Date(),
+			default: () => new Date(),
+		},
+		view: {
+			type: String,
+			default: 'week',
 		},
 	},
 
 	setup(props) {
+		const router = useRouter()
+
 		const calendar = ref<{getApi:()=>Calendar}>()
-		// const api = computed(() => calendar.value?.getApi())
+		const api = computed(() => calendar.value?.getApi())
+
+		router.beforeResolve((to, from) => {
+			if (to.name === from.name && to.name === 'roster') {
+				if (to.params.view !== from.params.view) api.value?.changeView(getView(to.params.view))
+				if (to.params.initialDate !== from.params.initialDate) api.value?.gotoDate(to.params.initialDate)
+			}
+		})
+
+		const showDate = (date: Date) => {
+			router.push({
+				name: 'roster',
+				params: {
+					view: 'day',
+					initialDate: date.toISOString().split('T')[0] as string,
+				},
+			})
+		}
+
+		const getView = (view: string = props.view) => view === 'month' ? 'dayGridMonth' : `timeGrid${view === 'day' ? 'Day' : 'Week'}`
 
 		const calendarOptions: CalendarOptions = {
 			plugins: [dayGridPlugin, timeGridPlugin],
-			initialView: 'timeGridWeek',
+			initialView: getView(),
 			initialDate: props.initialDate,
-			firstDay: props.firstDay,
+			firstDay: getFirstDay(),
+			locales: allLocales,
+			locale: getCanonicalLocale(),
+			navLinkDayClick: showDate,
+			navLinks: true,
 			headerToolbar: false,
+			dayHeaderFormat: {
+				weekday: 'short',
+				year: 'numeric',
+				day: 'numeric',
+				month: 'numeric',
+			},
 		}
 
 		return {
@@ -49,6 +83,7 @@ export default defineComponent({
 	},
 })
 </script>
+
 <style lang="scss">
 @import 'css/fullcalendar.scss';
 </style>

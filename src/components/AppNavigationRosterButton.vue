@@ -1,3 +1,7 @@
+<!--
+	SPDX-FileCopyrightText: Ferdinand Thiessen <rpm@fthiessen.de>
+	SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 <template>
 	<div class="app-navigation-new">
 		<div class="datepicker-button-section">
@@ -8,7 +12,7 @@
 				type="button"
 				@click="navigatePrevious"
 				@shortkey="navigatePrevious">
-				<ChevronLeftIcon :size="22" />
+				<ChevronLeftIcon :size="20" />
 			</button>
 			<button class="datepicker-button-section__datepicker-label button datepicker-label"
 				@click.stop.prevent="toggleDatepicker"
@@ -29,7 +33,7 @@
 				type="button"
 				@click="navigateNext"
 				@shortkey="navigateNext">
-				<ChevronRightIcon :size="22" />
+				<ChevronRightIcon :size="20" />
 			</button>
 		</div>
 	</div>
@@ -44,7 +48,7 @@ import { formatDate } from '@fullcalendar/core'
 import ChevronLeftIcon from 'vue-material-design-icons/ChevronLeft.vue'
 import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue'
 
-import { weekNumber, weeksInYear } from '../utils/date'
+import { dateString, weekNumber, weeksInYear } from '../utils/date'
 
 export default defineComponent({
 	name: 'AppNavigationRosterButton',
@@ -113,27 +117,29 @@ export default defineComponent({
 			case 'week':
 			default: date.setDate(date.getDate() + 7 * sign)
 			}
-			const day = date.getDate().toString().padStart(2, '0')
-			const month = (date.getMonth() + 1).toString().padStart(2, '0')
-			return `${date.getFullYear()}-${month}-${day}`
+			return dateString(date)
 		}
 
 		/**
 		 * Navigate to prvious time interval in calendar
 		 */
 		function navigatePrevious() {
-			const current = router.currentRoute
-			current.params.initialDate = getDateParam(false)
-			router.push({ name: current.name || undefined, params: current.params, hash: current.hash })
+			router.push({
+				name: router.currentRoute.name as string,
+				hash: router.currentRoute.hash,
+				params: { ...router.currentRoute.params, initialDate: getDateParam(false) },
+			})
 		}
 
 		/**
 		 * Navigate to next time interval in calendar
 		 */
 		function navigateNext() {
-			const current = router.currentRoute
-			current.params.initialDate = getDateParam(true)
-			router.push({ name: current.name || undefined, params: current.params, hash: current.hash })
+			router.push({
+				name: router.currentRoute.name as string,
+				hash: router.currentRoute.hash,
+				params: { ...router.currentRoute.params, initialDate: getDateParam(true) },
+			})
 		}
 
 		return {

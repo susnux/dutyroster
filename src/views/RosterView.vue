@@ -17,6 +17,7 @@ import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { getCanonicalLocale, getFirstDay } from '@nextcloud/l10n'
 import { useRouter } from 'vue-router/composables'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { dateString } from '../utils/date'
 
 export default defineComponent({
 	components: {
@@ -62,7 +63,7 @@ export default defineComponent({
 				name: 'roster',
 				params: {
 					view: 'day',
-					initialDate: date.toISOString().split('T')[0] as string,
+					initialDate: dateString(date),
 				},
 			})
 		}

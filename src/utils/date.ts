@@ -1,3 +1,8 @@
+/*
+* SPDX-FileCopyrightText: Ferdinand Thiessen <rpm@fthiessen.de>
+* SPDX-License-Identifier: AGPL-3.0-or-later
+*/
+
 /**
  * Get ISO week number of given date
  *
@@ -21,4 +26,16 @@ export function weeksInYear(year: number|string) {
 	const d = new Date(+year, 11, 31)
 	const week = weekNumber(d)[1]
 	return week === 1 ? 52 : week
+}
+
+/**
+ * @param date Date object to stingify
+ * @return local `YYYY-MM-DD` string
+ */
+export function dateString(date: Date = new Date()) {
+	return [
+		date.getFullYear(),
+		date.getMonth() + 1,
+		date.getDate(),
+	].map(v => `${v}`.padStart(2, '0')).join('-')
 }

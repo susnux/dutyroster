@@ -14,19 +14,25 @@
 			<IconMonth v-else />
 		</template>
 		<template #actions>
-			<NcActionButton close-after-click @click="toggleView('day')">
+			<NcActionButton close-after-click
+				:disabled="activeView === 'day'"
+				@click="toggleView('day')">
 				<template #icon>
 					<IconDay />
 				</template>
 				{{ t('dutyroster', 'Day') }}
 			</NcActionButton>
-			<NcActionButton close-after-click @click="toggleView('week')">
+			<NcActionButton close-after-click
+				:disabled="activeView === 'week'"
+				@click="toggleView('week')">
 				<template #icon>
 					<IconWeek />
 				</template>
 				{{ t('dutyroster', 'Week') }}
 			</NcActionButton>
-			<NcActionButton close-after-click @click="toggleView('month')">
+			<NcActionButton close-after-click
+				:disabled="activeView === 'month'"
+				@click="toggleView('month')">
 				<template #icon>
 					<IconMonth />
 				</template>

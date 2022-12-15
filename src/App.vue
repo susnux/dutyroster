@@ -12,6 +12,9 @@
 			<NcAppNavigationNew :text="t('dutyroster', 'Your shifts')"
 				:disabled="routeName === 'shifts'"
 				@click="goShifts" />
+			<NcActionSeparator />
+			<NavigationRoster v-if="routeName === 'roster'" />
+			<!--<NavigationShifts />-->
 		</NcAppNavigation>
 		<NcAppContent>
 			<router-view />
@@ -21,21 +24,25 @@
 
 <script lang="ts">
 import {
+	NcActionSeparator,
 	NcAppContent,
 	NcAppNavigation,
 	NcAppNavigationNew,
 	NcContent,
 } from '@nextcloud/vue'
 import { computed, defineComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router/composables'
 import AppNavigationRosterButton from './components/AppNavigationRosterButton.vue'
+import NavigationRoster from './components/NavigationRoster.vue'
 
 import '@nextcloud/dialogs/dist/index.css'
-import { useRoute, useRouter } from 'vue-router/composables'
 
 export default defineComponent({
 	name: 'App',
 	components: {
 		AppNavigationRosterButton,
+		NavigationRoster,
+		NcActionSeparator,
 		NcAppContent,
 		NcAppNavigation,
 		NcAppNavigationNew,
@@ -79,6 +86,10 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+}
+
+.app-navigation .action {
+	list-style-type: none;
 }
 
 textarea {

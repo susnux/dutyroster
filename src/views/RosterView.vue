@@ -49,11 +49,12 @@ export default defineComponent({
 			unsubscribe('navigation-toggled', resizeCalendar)
 		})
 
-		router.beforeResolve((to, from) => {
+		router.beforeResolve((to, from, next) => {
 			if (to.name === from.name && to.name === 'roster') {
 				if (to.params.view !== from.params.view) api.value?.changeView(getView(to.params.view))
 				if (to.params.initialDate !== from.params.initialDate) api.value?.gotoDate(to.params.initialDate)
 			}
+			next()
 		})
 
 		const showDate = (date: Date) => {

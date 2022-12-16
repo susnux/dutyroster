@@ -14,7 +14,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import allLocales from '@fullcalendar/core/locales-all'
 
 import { useRouter } from 'vue-router/composables'
-import { Calendar, CalendarOptions } from '@fullcalendar/core'
+import { Calendar, CalendarOptions, FormatterInput } from '@fullcalendar/core'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
 import { getCanonicalLocale, getFirstDay } from '@nextcloud/l10n'
 import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
@@ -54,7 +54,12 @@ export default defineComponent({
 
 		router.beforeResolve((to, from, next) => {
 			if (to.name === from.name && to.name === 'roster') {
-				if (to.params.view !== from.params.view) api.value?.changeView(getView(to.params.view))
+				if (to.params.view !== from.params.view) {
+					api.value?.changeView(getView(to.params.view))
+					if (to.params.view === 'month' || from.params.view === 'month') {
+						api.value?.setOption('dayHeaderFormat', dayHeaderFormat(to.params.view))
+					}
+				}
 				if (to.params.initialDate !== from.params.initialDate) api.value?.gotoDate(to.params.initialDate || new Date())
 			}
 			next()
@@ -70,6 +75,21 @@ export default defineComponent({
 			})
 		}
 
+		const dayHeaderFormat = (view: string = props.view): FormatterInput => {
+			if (view === 'month') {
+				return {
+					weekday: 'long',
+				}
+			} else {
+				return {
+					weekday: 'short',
+					year: 'numeric',
+					day: 'numeric',
+					month: 'numeric',
+				}
+			}
+		}
+
 		const getView = (view: string = props.view) => view === 'month' ? 'dayGridMonth' : `timeGrid${view === 'day' ? 'Day' : 'Week'}`
 
 		const calendarOptions: CalendarOptions = {
@@ -82,12 +102,7 @@ export default defineComponent({
 			navLinkDayClick: showDate,
 			navLinks: true,
 			headerToolbar: false,
-			dayHeaderFormat: {
-				weekday: 'short',
-				year: 'numeric',
-				day: 'numeric',
-				month: 'numeric',
-			},
+			dayHeaderFormat: dayHeaderFormat(),
 		}
 
 		return {

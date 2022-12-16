@@ -159,13 +159,37 @@ export default defineComponent({
 // Same as `@nextcloud/vue`
 .app-navigation-new {
 	display: block;
-	padding: calc(var(--default-grid-baseline, 4px)*2);
+	padding: calc(var(--default-grid-baseline, 4px) * 2);
 }
 </style>
 
 <style lang="scss">
 .datepicker-button-section {
 	display: flex;
+
+	&__datepicker-label {
+		flex-grow: 4 !important;
+		text-align: center;
+	}
+
+	&__datepicker {
+		margin-left: 26px;
+		margin-top: 48px;
+		position: absolute !important;
+		width: 0 !important;
+
+		.mx-input-wrapper {
+			display: none !important;
+		}
+	}
+
+	&__previous,
+	&__next {
+		background-size: 10px;
+		flex-grow: 0 !important;
+		width: 34px;
+		padding: 0 6px !important;
+	}
 
 	.button {
 		// this border-radius affects the button in the middle of the group
@@ -196,31 +220,6 @@ export default defineComponent({
 	.button:focus,
 	.button.active {
 		z-index: 50;
-	}
-}
-.datepicker-button-section {
-	&__datepicker-label {
-		flex-grow: 4 !important;
-		text-align: center;
-	}
-
-	&__datepicker {
-		margin-left: 26px;
-		margin-top: 48px;
-		position: absolute !important;
-		width: 0 !important;
-
-		.mx-input-wrapper {
-			display: none !important;
-		}
-	}
-
-	&__previous,
-	&__next {
-		background-size: 10px;
-		flex-grow: 0 !important;
-		width: 34px;
-		padding: 0 6px !important;
 	}
 }
 </style>

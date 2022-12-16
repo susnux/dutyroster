@@ -99,5 +99,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import 'css/fullcalendar.scss';
+@import 'css/fullcalendar';
 </style>

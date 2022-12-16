@@ -23,6 +23,8 @@
 
 /** Override some FullCalendar CSS vars: */
 .fc {
+	font-family: var(--font-face) !important;
+
 	--fc-small-font-size: 0.875em;
 	--fc-page-bg-color: var(--color-main-background) !important;
 	--fc-neutral-bg-color: var(--color-background-dark) !important;
@@ -47,10 +49,6 @@
 	--fc-today-bg-color: var(--color-main-background) !important;
 	--fc-now-indicator-color: red;
 	--fc-list-event-hover-bg-color: var(--color-background-hover) !important;
-}
-
-.fc {
-	font-family: var(--font-face) !important;
 }
 
 .fc-media-screen {
@@ -264,6 +262,7 @@
 		min-height: 150px !important;
 	}
 }
+
 .fc-daygrid-day-events {
 	position:relative !important;
 }

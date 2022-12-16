@@ -8,15 +8,17 @@
 </template>
 
 <script lang="ts">
-import '@fullcalendar/core/vdom.js'
-import FullCalendar, { Calendar, CalendarOptions } from '@fullcalendar/vue'
-import allLocales from '@fullcalendar/core/locales-all'
-import timeGridPlugin from '@fullcalendar/timegrid'
+import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
-import { getCanonicalLocale, getFirstDay } from '@nextcloud/l10n'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import allLocales from '@fullcalendar/core/locales-all'
+
 import { useRouter } from 'vue-router/composables'
+import { Calendar, CalendarOptions } from '@fullcalendar/core'
 import { subscribe, unsubscribe } from '@nextcloud/event-bus'
+import { getCanonicalLocale, getFirstDay } from '@nextcloud/l10n'
+import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
+
 import { dateString } from '../utils/date'
 
 export default defineComponent({
@@ -53,7 +55,7 @@ export default defineComponent({
 		router.beforeResolve((to, from, next) => {
 			if (to.name === from.name && to.name === 'roster') {
 				if (to.params.view !== from.params.view) api.value?.changeView(getView(to.params.view))
-				if (to.params.initialDate !== from.params.initialDate) api.value?.gotoDate(to.params.initialDate)
+				if (to.params.initialDate !== from.params.initialDate) api.value?.gotoDate(to.params.initialDate || new Date())
 			}
 			next()
 		})

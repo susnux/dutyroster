@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "timezone": "Europe/Berlin",
+  "rebaseWhen": "conflicted",
+  "rangeStrategy": "bump",
+  "commitMessagePrefix": "⬆️",
+  "platformCommit": true,
+  "ignoreUnstable": false,
+  "ignoreDeps": [
+    "node",
+    "npm"
+  ],
+  "enabledManagers": [
+    "npm"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["vue"],
+      "allowedVersions": "<3"
+    },
+    {
+      "matchPackageNames": ["vue-router"],
+      "allowedVersions": "<4"
+    }
+  ]
+}

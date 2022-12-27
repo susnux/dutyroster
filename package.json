@@ -20,10 +20,10 @@
     "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix"
   },
   "dependencies": {
-    "@fullcalendar/core": "^6.0.1",
-    "@fullcalendar/daygrid": "^6.0.1",
-    "@fullcalendar/timegrid": "^6.0.1",
-    "@fullcalendar/vue": "^6.0.1",
+    "@fullcalendar/core": "^6.0.2",
+    "@fullcalendar/daygrid": "^6.0.2",
+    "@fullcalendar/timegrid": "^6.0.2",
+    "@fullcalendar/vue": "^6.0.2",
     "@nextcloud/axios": "^2.3.0",
     "@nextcloud/dialogs": "^4.0.0-beta.2",
     "@nextcloud/event-bus": "^3.0.2",

@@ -30,7 +30,7 @@
     "@nextcloud/l10n": "^1.6.0",
     "@nextcloud/router": "^2.0.1",
     "@nextcloud/vue": "^7.6.0",
-    "vue": "^2.7.14",
+    "vue": "^2.7.16",
     "vue-material-design-icons": "^5.2.0",
     "vue-router": "^3.6.5",
     "vue-shortkey": "^3.1.7"
